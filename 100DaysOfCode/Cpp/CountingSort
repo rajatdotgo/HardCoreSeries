@@ -1,0 +1,49 @@
+#include<iostream>
+#include<stdio.h>
+#include<string.h>
+
+using namespace std;
+
+int main()
+{
+	int input[] = {2,1,2,3,4,5,2};
+	int size  = sizeof(input)/sizeof(int);
+	int max = 0;
+	
+	for(int j=0;j<size;j++)
+	{
+		if(input[j]>max)
+		{
+			max  =input[j];
+		}
+	}
+    
+	
+	int count[max+1];
+	memset(count, 0, (max+1)*sizeof(count[0]));   //memset is used to initialize all elements of array with zero
+	int place[size];
+	memset(place, 0, size*sizeof(place[0]));
+	for(int i=0;i<size;i++)
+	{
+		++count[input[i]];
+	}
+	
+	
+	
+	for(int i = 1 ;i<=max;i++)
+	{
+		count[i] +=count[i-1]; 
+	}
+
+	
+	for(int i = 0 ;i<size;i++)
+	{
+		place[count[input[i]]] =input[i];
+		count[input[i]]--;
+	}
+		for(int i =  1;i<=size;i++)
+	{
+		cout<<place[i]<<" ";
+		
+	}
+}
