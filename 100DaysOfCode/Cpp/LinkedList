@@ -1,0 +1,230 @@
+#include<iostream>
+
+using namespace std;
+
+
+// ************************************** Inserting the node at begining *******************************//
+//	struct Node
+//	{
+//		int data;
+//		Node* next;
+//	};
+//	
+//	Node* head;
+//	
+//	void insert(int x)
+//	{
+//		Node* temp = new Node();
+//		temp->data = x;
+//		temp->next = head;
+//		head = temp;
+//		
+//	}
+//	
+//	void print()
+//	{
+//		Node* ptr;
+//		ptr = head;
+//		while(ptr->next!=NULL)
+//		{
+//			cout<<ptr->data<<" ";
+//			ptr = ptr->next;
+//		}
+//		cout<<ptr->data;
+//	}
+//int main()
+//{
+//	head = NULL;
+//	int n;
+//	cout<<"how many numbers u wanna enter\n";
+//	cin>>n;
+//	for(int i =0;i<n;i++)
+//	{
+//		insert(i+1);
+//		cout<<"\n";
+//		print();
+//	}
+//	//print();
+//} 
+//************************************* Inserting the node at nth position *************************************//
+//
+//struct Node{
+//	int data;
+//	Node* next ;
+//};
+//Node* head;
+//
+//void insert(int x,int n){
+//	// allocating space
+//	Node* temp1 = new Node();
+//	// inserting the required data
+//	temp1->data = x;
+//	temp1->next = NULL;
+//	
+//	if(n==1)
+//	{
+//		temp1->next = head;
+//		head = temp1;
+//		return;
+//	}
+//	
+//	
+//	Node* temp2 = head;
+//	for(int i =0;i<n-2;i++)
+//	{
+//		temp2 = temp2->next;
+//	}
+//	temp1->next = temp2->next;
+//	temp2->next = temp1;
+//	
+//}
+//
+//void print()
+//{
+//	Node* ptr;
+//	ptr = head;
+//	while(ptr->next!=NULL)
+//	{
+//		cout<<ptr->data<<" ";
+//		ptr = ptr->next;
+//	}
+//	cout<<ptr->data;
+//}
+//
+//int main()
+//	{
+//		head = NULL;
+//		insert(2,1);
+//	
+//		insert(3,2);
+//		
+//		insert(4,1);
+//	
+//		insert(5,2);
+//		print();
+//		
+//	 }
+
+//****************************** Deleting a node at nth position *********************************//
+
+          struct Node{
+            int data;
+            Node* next;
+          }; 
+          Node* head;
+
+          void insert(int x)
+          {
+            Node* newNode = new Node();
+            newNode->data = x;
+            newNode->next = NULL;
+            Node* currentNode;
+            currentNode = head;
+            if(currentNode == NULL)
+            {
+              head = newNode;
+            }
+            else
+            {
+              while(currentNode->next != NULL)
+              {
+                currentNode = currentNode->next;
+              }
+              currentNode->next = newNode;
+            }
+          }
+
+//void print()
+//{	
+//	cout<<"\n";
+//	Node* ptr;
+//	ptr = head;
+//	while(ptr->next!=NULL)
+//	{
+//		cout<<ptr->data<<" ";
+//		ptr = ptr->next;
+//	}
+//	cout<<ptr->data;
+//}
+      void print(Node* p)
+      {
+        if(p==NULL) return;          // print the element using recursion
+        cout<<p->data;
+        print(p->next);
+      }
+
+      void revPrint(Node* p)
+      {
+        if(p == NULL) return;       // print the element in reverse order using recursion
+        revPrint(p->next);
+
+        cout<< p->data;
+      }
+      void Delete()
+      {
+        int n;
+        cout<<"\nenter the position of node u wanna delete\n";
+        cin>>n;
+        Node* temp1 = head;
+
+        if(n==1)
+        {
+          head = temp1->next;
+          delete temp1;
+          return;
+        }
+        for(int i=0;i<n-2;i++)
+        {
+          temp1 =  temp1->next; 
+        }
+        Node* temp2  = temp1->next;
+        temp1->next = temp2->next;
+        delete temp2;
+        cout<<"new list is\n";
+      }
+//void reverse()
+//{
+//	cout<<"\nreversed list is\n";
+//	Node *prev,*current,*next;
+//	current = head;                     // reversing the list using iterative method
+//	prev = NULL;
+//	while(current !=NULL)
+//	{
+//		next = current->next;
+//		current->next = prev;
+//		prev = current;
+//		current = next;
+//	}
+//	head  = prev;
+//}
+
+      void reverse(Node* p)
+      {
+        if(p->next == NULL)
+        {
+          head = p;
+          return;
+        }
+        reverse(p->next);                 // reversing the list using recursion
+        Node* q = p->next;
+        q->next = p;
+        p->next = NULL;
+
+      }
+      int main()
+      {
+        head = NULL;	
+
+        insert(1);
+        insert(2);
+        insert(3);
+        insert(4);
+        print(head);
+      //	cout<<"\n reverse order will be\n";
+      //	revPrint(head);
+        Delete();
+        print(head);
+        reverse(head);
+        print(head);
+
+      }
