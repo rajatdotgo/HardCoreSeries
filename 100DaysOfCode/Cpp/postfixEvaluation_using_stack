@@ -1,0 +1,68 @@
+/*
+this program have following assumptions
+->only these can be operator +,-,*,/
+->operand can be of only single digit
+*/
+
+
+
+#include<bits/stdc++.h>
+#include<stack>
+
+using namespace std;
+
+int isDigit(char c)
+{
+	if(c >='0'&&c<='9') return 1;
+	return 0;
+}
+
+int perform(char operation,int op1,int op2)
+{
+	if(operation == '+')  return op1+op2;
+    else if(operation == '-')  return op1-op2;
+	else if(operation == '*')  return op1*op2;
+	else if(operation == '/')  return op1/op2;
+	
+}
+
+int isOperator(char operation)
+{
+	if(operation == '+' || operation == '-' || operation == '*' || operation == '/') 
+	return 1;
+	return 0;
+}
+
+int evaluate(string exp)
+{
+	int result;
+	stack<int> st;
+	for(int i=0;i<exp.length();i++)
+	{
+		if(exp[i]==' '|| exp[i]==','||exp[i]=='.')  continue;
+		else if(isOperator(exp[i]))
+		{
+			
+			int op2 =(int) st.top(); 
+			st.pop();
+			
+			int op1 =(int) st.top();
+			st.pop(); 
+			
+			 result = perform(exp[i],op1,op2);
+			 st.push(result);
+		}
+		else if(isDigit(exp[i]))
+		{
+			st.push(exp[i]-'0');
+		}
+	}
+	return st.top();
+}
+int main()
+{
+	string exp = "243*+7-";
+	cout<<evaluate(exp);
+	
+	
+}
