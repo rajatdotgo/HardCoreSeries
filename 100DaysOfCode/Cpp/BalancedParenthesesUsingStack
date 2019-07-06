@@ -1,0 +1,57 @@
+/*
+C++ Program to check for balanced parentheses in an expression using stack.
+Given an expression as string comprising of opening and closing characters
+of parentheses - (), curly braces - {} and square brackets - [], we need to
+check whether symbols are balanced or not.
+*/
+
+
+#include<bits/stdc++.h>
+#include<string.h>
+
+using namespace std;
+
+bool isPair(char opening , char closing)
+{
+	if(opening=='(' && closing==')' || opening=='{' && closing=='}'|| opening=='[' && closing==']')
+	return true;
+	else 
+	return false;
+}
+string checkBalance(string s)
+{
+	stack<char> st;
+	string output;
+	for(int i=0;i<s.length();i++)
+	{
+		if(s[i]=='(' || s[i]=='[' || s[i]=='{')
+		{
+			st.push(s[i]);
+		}
+		else if(s[i]==')' || s[i]==']' || s[i]=='}')
+		{
+			if(st.empty()) 
+			{
+			output = "unbalanced";
+			
+			}
+			 if(isPair(st.top(),s[i]))
+			{
+				st.pop();
+			}
+			else
+			{
+				output = "unbalanced";
+			}
+		}
+	}
+	if(output!="unbalanced")
+	{
+		output = "balanced";
+	}
+	return output;
+}
+int main()
+{
+	cout<<checkBalance("]]]");
+}
