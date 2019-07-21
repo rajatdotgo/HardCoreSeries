@@ -1,0 +1,151 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct BSTNode
+{
+	int data;
+	BSTNode* left;
+	BSTNode* right;
+};
+BSTNode* root;
+BSTNode* GetNode(int data)
+{
+	BSTNode* newNode = new BSTNode();
+	newNode->data = data;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+
+BSTNode* insert(BSTNode* root,int x)
+{
+	if(root==NULL)
+	{
+		root = GetNode(x);
+		
+	}
+	else if(x<= root->data)
+	{
+		root->left = insert(root->left,x);
+	}
+	else if(x > root->data)
+	{
+		root->right = insert(root->right,x);
+	}
+	return root;
+}
+
+bool search(BSTNode* root, int data)                      // this will return true if the search element is in the tree otherwise false
+{
+	if(root == NULL) return false;
+	else if(root->data == data) return true;
+	else if(data< root->data) search(root->left,data);
+	else if(data> root->data) search (root->right,data);
+}
+
+void print(BSTNode* root,int level)          //this function will print the tree in hierarchy order
+{
+	if(root == NULL)
+		return;
+	for(int i  = 0; i< level; i++)
+	{
+		cout<<"->";
+	}
+	
+	cout<<" "<<root->data<<"\n";
+    print(root->left,level+1);
+	print(root->right,level+1);
+}
+int max(int x,int y)                       // return max of the two
+{
+	if(x>y) return x;
+	else return y;
+}
+
+int findHeight(BSTNode* root )        //this function will return the height of the node passed to it
+{
+	if(root == NULL) 
+		return -1;
+	
+	return max(findHeight(root->left),findHeight(root->right))+1;
+}
+
+
+void BFT(BSTNode* root)
+{
+	if(root == NULL)
+		return;
+	queue<BSTNode*> Q;
+	Q.push(root);
+	while(!Q.empty())
+	{
+		BSTNode* current = Q.front();;
+		cout<<current->data<<" ";
+		if(current->left !=NULL) Q.push(current->left);
+		if(current->right !=NULL) Q.push(current->right);
+		Q.pop();
+	}
+}
+
+BSTNode* FindMin(BSTNode* root)
+{
+	while(root->left != NULL) root = root->left;
+	return root;
+}
+
+
+BSTNode* Delete(BSTNode* root,int data)                                   // function Delete the data from the tree
+{
+	if(root==NULL) return root;
+	else if(data<root->data) root->left = Delete(root->left,data);
+	else if(data>root->data) root->right = Delete(root->right,data);
+	else
+	{
+		//Case 1: No child
+		if(root->left==NULL && root->right==NULL)
+		{
+			delete root;
+			root = NULL;
+		}
+		//Case 2: One child
+		else if(root->left==NULL)
+		{
+			BSTNode* temp = root;
+			root = root->right;
+			delete temp;
+		}
+		else if(root->right==NULL)
+		{
+			BSTNode* temp = root;
+			root = root->left;
+			delete temp; 
+		}
+		//Case 3: Two Children 
+		else{
+			BSTNode* temp = FindMin(root->right);
+			root->data = temp->data;
+			root->right = Delete(root->right,temp->data);
+		}
+	}
+	return root;
+}
+int main()
+{
+	root = NULL;
+	root = insert(root,15);
+	root = insert(root,10);
+	root = insert(root,7);
+	root = insert(root,12);
+	root = insert(root,11);
+	root = insert(root,17);
+	root = insert(root,16);
+	root = insert(root,20);	
+	if(search(root,7)) cout<<"\nfound";
+	else cout<<"\nnot found\n";
+	Delete(root,7);
+	//print(root,0);
+	BFT(root);
+	cout<<"\nheight of tree is";
+	cout<<findHeight(root);
+}
