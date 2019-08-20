@@ -1,0 +1,50 @@
+/*package whatever //do not write package name here */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.util.Map;
+
+class GFG {
+	public static void main (String[] args) {
+	    Scanner sc = new Scanner(System.in);
+	    int N,T,s;
+	    Map<Integer,Integer> map = new HashMap();
+	    T=sc.nextInt();
+	    while(T!=0)
+	    {
+	        N=sc.nextInt();
+	        for(int i=1;i<N;i++)
+	        {   
+	            s=sc.nextInt();
+	            map.putIfAbsent(s,0);
+	            map.put(s,map.get(s)+1);
+	        }
+	        int max=1;
+	        for(int a: map.keySet())
+	        {
+	            System.out.println("for T:"+T+" "+a+"enter in for");
+	            int temp;
+	            if(map.get(a)>=(N/2)) 
+	            {
+	                temp=a;
+	                break;     
+	           }
+	            else if(max<map.get(a)) 
+	            {
+	                max = map.get(a);
+	                temp =a;
+	                
+	                //System.out.println("temp"+temp);
+	            }
+	           
+	        }
+	        if(max==1)
+	        {
+	            System.out.println(-1);
+	        }
+	        T--;
+	    }
+		//code
+	}
+}
